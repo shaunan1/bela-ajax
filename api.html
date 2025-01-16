@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Fetch Example</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #111827; /* Dark theme */
+            color: #f9fafb; /* Light text */
+        }
+        .btn {
+            background-color: #ec4899; /* Pink */
+            color: #111827; /* Dark text */
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center p-6">
+    <h1 class="text-4xl font-bold mb-6 text-pink-500">API Fetch Example</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <button onclick="fetchData('events')" class="btn px-4 py-2 rounded hover:bg-pink-700">Fetch Events</button>
+        <button onclick="fetchData('orders')" class="btn px-4 py-2 rounded hover:bg-pink-700">Fetch Orders</button>
+        <button onclick="fetchData('organizers')" class="btn px-4 py-2 rounded hover:bg-pink-700">Fetch Organizers</button>
+        <button onclick="fetchData('tickets')" class="btn px-4 py-2 rounded hover:bg-pink-700">Fetch Tickets</button>
+    </div>
+
+    <div id="output" class="mt-8 p-4 rounded bg-gray-800 w-full max-w-4xl overflow-auto"></div>
+
+    <script>
+        const apiUrl = "https://wypypesha.my.id/api/";
+
+        async function fetchData(endpoint) {
+            try {
+                const response = await fetch(`${apiUrl}${endpoint}`);
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status}`);
+                }
+                const data = await response.json();
+                displayData(endpoint, data);
+            } catch (error) {
+                document.getElementById("output").innerHTML = `<div class='text-red-500'>${error.message}</div>`;
+            }
+        }
+
+        function displayData(endpoint, data) {
+            const output = document.getElementById("output");
+            output.innerHTML = `<h2 class='text-2xl font-bold mb-4'>${endpoint.charAt(0).toUpperCase() + endpoint.slice(1)} Data</h2>`;
+            output.innerHTML += `<pre class='whitespace-pre-wrap break-words text-sm bg-gray-700 p-4 rounded'>${JSON.stringify(data, null, 2)}</pre>`;
+        }
+    </script>
+</body>
+</html>

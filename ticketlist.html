@@ -185,7 +185,7 @@
                 method: 'GET',
                 success: function (data) {
                     let rows = '';
-                    data.forEach((ticket, index) => {
+                     data.forEach((ticket, index) => {
                         rows += `
                             <tr id="ticket-${ticket.id}">
                                 <td>${index + 1}</td>
